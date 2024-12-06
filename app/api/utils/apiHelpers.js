@@ -1,2 +1,2 @@
-export const F1_API_URL = 'http://api.jolpi.ca/ergast/f1/';
-export const DRIVERS_API_URL = 'https://api.openf1.org/v1/';
+export const F1_API_URL = process.env.F1_API_URL;
+export const DRIVERS_API_URL = process.env.DRIVERS_API_URL;

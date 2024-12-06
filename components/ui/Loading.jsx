@@ -3,16 +3,6 @@ import React from 'react';
 const Loading = () => {
   return (
     <svg viewBox='0 0 178 40' width='178' height='40'>
-      <path
-        className='air'
-        d='M 46 16.5 h -20 a 8 8 0 0 1 0 -16'
-        fill='none'
-        stroke='#E85725'
-        strokeWidth='1'
-        strokeLinejoin='round'
-        strokeLinecap='round'
-      ></path>
-
       <g id='car'>
         <svg
           viewBox='0 0 118 28.125'
@@ -148,57 +138,6 @@ const Loading = () => {
             </g>
           </g>
         </svg>
-      </g>
-
-      <g
-        fill='none'
-        strokeWidth='1'
-        strokeLinejoin='round'
-        strokeLinecap='round'
-      >
-        <path
-          className='air'
-          stroke='#E85725'
-          d='M 177.5 34 h -10 q -16 0 -32 -8'
-        ></path>
-
-        <path
-          className='air'
-          stroke='#949699'
-          d='M 167 28.5 c -18 -2 -22 -8 -37 -10.75'
-        ></path>
-
-        <path
-          className='air'
-          stroke='#949699'
-          d='M 153 20 q -4 -1.7 -8 -3'
-        ></path>
-
-        <path
-          className='air'
-          stroke='#E85725'
-          d='M 117 16.85 c -12 0 -12 16 -24 16 h -8'
-        ></path>
-
-        <path
-          className='air'
-          stroke='#949699'
-          d='M 65 12 q -5 3 -12 3.8'
-        ></path>
-
-        <path
-          className='air'
-          stroke='#949699'
-          strokeDasharray='9 10'
-          d='M 30 13.5 h -2.5 q -5 0 -5 -5'
-        ></path>
-
-        <path className='air' stroke='#949699' d='M 31 33 h -10'></path>
-
-        <path className='air' stroke='#949699' d='M 29.5 23 h -12'></path>
-        <path className='air' stroke='#949699' d='M 13.5 23 h -6'></path>
-
-        <path className='air' stroke='#E85725' d='M 28 28 h -27.5'></path>
       </g>
     </svg>
   );

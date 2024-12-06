@@ -8,10 +8,8 @@ import {
 } from '@/components/ui/chart';
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 
-const FastestRadarChart = ({ config, data }) => {
-  // Normalize and process the data for better visualization
+const FastestRadarChart = ({ data }) => {
   const processedData = data.map((item) => {
-    // Convert lap time string to seconds for better visualization
     const timeToSeconds = (timeStr) => {
       if (!timeStr || timeStr === '0') return 0;
       const [minutes, seconds] = timeStr.split(':').map(parseFloat);

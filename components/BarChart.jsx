@@ -16,14 +16,19 @@ import { Separator } from './ui/separator.jsx';
 import useGetResults from '@/app/hooks/useGetResults.js';
 import WorldMap from './ui/world-map.jsx';
 import Loading from './ui/Loading.jsx';
+import { useAtomValue } from 'jotai';
+import {
+  constructorAtom,
+  constructorStandingsAtom,
+  driverAtom,
+  driverStandingsAtom,
+} from '@/app/utils/atoms/index.js';
+import YearlyResultChart from './YearlyResultChart.jsx';
+import { F1DriverPerformanceChart } from './StandingChart.jsx';
 
 const chartConfig = {
   points: { label: 'Points' },
   fastestLap: { label: 'Fastest Lap' },
-};
-
-const fastestChartConfig = {
-  labels: ['Fastest Lap Time', 'Average Speed'],
 };
 
 const start = {
@@ -37,6 +42,12 @@ const Results = () => {
   const [chartData, setChartData] = useState([]);
   const [activeChart, setActiveChart] = useState(Object.keys(chartConfig)[0]);
   const [dots, setDots] = useState([]);
+
+  const driverId = useAtomValue(driverAtom);
+  const constructorId = useAtomValue(constructorAtom);
+
+  const driverStandings = useAtomValue(driverStandingsAtom);
+  const constructorStandings = useAtomValue(constructorStandingsAtom);
 
   useEffect(() => {
     if (
@@ -95,7 +106,7 @@ const Results = () => {
 
   if (loading)
     return (
-      <div className='flex items-center justify-center '>
+      <div className='flex items-center justify-center min-h-screen'>
         <Loading />
       </div>
     );
@@ -105,17 +116,48 @@ const Results = () => {
         Error loading drivers. Please try again later.
       </p>
     );
-  console.log({ dots });
 
   return (
     <div className='flex flex-col items-center bg-background text-foreground p-4 rounded-lg space-y-4'>
+      <WorldMap dots={dots} />
+
+      <Separator className='w-full' />
       <div className='flex flex-wrap gap-2 items-center justify-center w-full'>
         <YearSelect />
         <DriversSelect />
-        <ConstructorsSelect />
       </div>
-      <Separator className='w-full' />
-      <WorldMap dots={dots} />
+      <>
+        {driverId && driverStandings && driverStandings?.length > 0 ? (
+          <>
+            <Separator className='w-full' />
+            <div className='flex flex-1 flex-row items-center justify-center'>
+              {driverStandings?.map((standing, key) => (
+                <F1DriverPerformanceChart
+                  key={'driver-' + key}
+                  driverData={standing.DriverStandings}
+                  round={standing.round}
+                  season={standing.season}
+                  cardTitle='Driver'
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+      <>
+        {constructorId &&
+        constructorStandings &&
+        constructorStandings?.length > 0 ? (
+          <>
+            <Separator className='w-full' />
+            <F1DriverPerformanceChart />
+          </>
+        ) : (
+          <></>
+        )}
+      </>
       <Separator className='w-full' />
       {chartData.length > 0 ? (
         <Accordion type='single' collapsible className='w-full'>
@@ -142,24 +184,12 @@ const Results = () => {
                     </button>
                   ))}
                 </div>
+
                 <div className='rounded-md'>
-                  {result.results && result.results.length > 0 ? (
-                    activeChart === Object.keys(chartConfig)[0] ? (
-                      <PointsBarChart
-                        data={result.results}
-                        chartConfig={chartConfig}
-                      />
-                    ) : (
-                      <FastestRadarChart
-                        config={fastestChartConfig}
-                        data={result.results}
-                      />
-                    )
-                  ) : (
-                    <p className='text-center text-muted-foreground'>
-                      No data available for this race
-                    </p>
-                  )}
+                  <YearlyResultChart
+                    activeChart={activeChart}
+                    data={result.results}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>

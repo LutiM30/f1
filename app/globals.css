@@ -81,34 +81,17 @@ body > svg {
 /* animate the car to move slightly forwards and backwards */
 g#car {
   transform: translateX(-3px);
-  animation: translate 2s ease-in-out infinite;
+  animation: translate 2s linear infinite;
 }
 /* animate the shadow to skew  toward the left */
 path#shadow {
-  animation: skew 2s ease-in-out infinite;
+  animation: skew 2s linear infinite;
 }
 /* animate the wheels to spin  clockwise*/
 g.wheels use {
   animation: rotate 2s linear infinite;
 }
-/* animate the dashes of air to briefly show them and then hide them from view */
-path.air {
-  /* starting from the values described by the --stroke-dash property
-  ! the property is updated for each path in the script
-  */
-  stroke-dasharray: var(--stroke-dash);
-  stroke-dashoffset: var(--stroke-dash);
-  /* ! the delay of the animation is also set up in the script  */
-  animation: offset 2s linear infinite;
-  /* opacity to hide the obnoxious dots otherwise shown on firefox and edge */
-  opacity: 0;
-}
 
-/* keyframe animations
-! be sure to have the animations overlap as to show a realistic behavior
-- as the car moves right the wheels spin faster, the shadow skews left, the dashes of air appear in sequence
-- as the car moves left the wheels spin slower while the shadow returns to its resting place
-*/
 @keyframes translate {
   50% {
     transform: translateX(3px);
