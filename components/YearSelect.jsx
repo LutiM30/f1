@@ -6,8 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { useAtom } from 'jotai';
-import { yearAtom } from '@/app/utils/atoms';
+import { useAtom, useSetAtom } from 'jotai';
+import { constructorAtom, driverAtom, yearAtom } from '@/app/utils/atoms';
 
 const YearSelect = () => {
   const currentYear = new Date().getFullYear();
@@ -17,9 +17,18 @@ const YearSelect = () => {
   );
 
   const [year, setYear] = useAtom(yearAtom);
+  const setDriverId = useSetAtom(driverAtom);
+  const setConstructorId = useSetAtom(constructorAtom);
 
   return (
-    <Select onValueChange={setYear} defaultValue={year}>
+    <Select
+      onValueChange={(v) => {
+        setDriverId(null);
+        setConstructorId(null);
+        setYear(v);
+      }}
+      defaultValue={year}
+    >
       <SelectTrigger className='w-[180px] data-[placeholder]:text-background'>
         <SelectValue placeholder='Select Year' />
       </SelectTrigger>
